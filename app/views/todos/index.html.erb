@@ -1,6 +1,13 @@
-
-
-<% if notice %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="turbo-prefetch" content="false">
+    <title>Document</title>
+</head>
+<body>
+    <% if notice %>
     <p id="notice"><%= notice %></p>
 <% end %>
 
@@ -16,5 +23,14 @@
 <% end %>
 
 <% @todos.each do |todo| %>
-    <li><%= todo.title %></li>
+    <li><%= todo.title %> | <%= todo.status %> |
+        <% if todo.status == 'Not Done' %>
+            <%= link_to 'mark done', toggle_status_todo_path(todo), data: {turbo_method: :post} %>
+        <% elsif todo.status == 'Done' %>
+            <%= link_to 'mark not done', toggle_status_todo_path(todo), data: {turbo_method: :post} %>
+        <% end %>
+        <%= link_to 'X', todo_path(todo), data: {turbo_method: :delete} %>
+    </li>
 <% end %>
+</body>
+</html>

@@ -14,6 +14,21 @@ class TodosController < ApplicationController
     end
   end
 
+  def destroy
+    @todo = Todo.find(params[:id])
+    @todo.destroy
+    redirect_to todos_path, notice: "Todo deleted"
+  end
+
+  def toggle_status
+    @todo = Todo.find(params[:id])
+    Rails.logger.warn @todo
+    @todo.status = @todo.status == "Done" ? "Not Done" : "Done"
+    @todo.save
+    Rails.logger.warn @todo
+    redirect_to todos_path
+  end
+
   private
   def todo_params
     params.require(:todo).permit(:title)
