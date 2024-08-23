@@ -1,0 +1,20 @@
+
+
+<% if notice %>
+    <p id="notice"><%= notice %></p>
+<% end %>
+
+<% if @todo.errors.any? %>
+    <% @todo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+    <% end %>
+<% end %>
+
+<%= form_with model: @todo, data: {turbo: false} do |form| %>
+    <%= form.text_field :title %>
+    <%= form.submit %>
+<% end %>
+
+<% @todos.each do |todo| %>
+    <li><%= todo.title %></li>
+<% end %>
